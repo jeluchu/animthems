@@ -43,6 +43,7 @@ object Animthems {
     suspend fun getAnimesFiltered(
         page: Int = 1,
         year: Int? = null,
+        name: String? = null,
         season: String? = null
     ): List<AnimesEntity> {
         val endpoint = "anime"
@@ -53,6 +54,7 @@ object Animthems {
         params.add("include=images")
         year?.let { params.add("filter[year]=$it") }
         season?.let { params.add("filter[season]=$it") }
+        name?.let { params.add("filter[name]=$it") }
 
         return restClient.request<AnimesRequestEntity>("$endpoint?${params.joinToString("&")}")?.anime?.map { anime ->
             anime.toAnimesEntity()
